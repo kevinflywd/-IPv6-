@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>开始使用layui</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <style type="text/css">
+        .row {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .col {
+            position: relative;
+            width: 100%;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+            -ms-flex-preferred-size: 0;
+            flex-basis: 0;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            max-width: 100%;
+        }
+
+        .nr {
+
+            font-weight: bold;
+            margin: 0;
+            background: -webkit-linear-gradient(left, #ffffff, #0000ff 6.25%, #0000CD 12.5%, #87CEEB 18.75%, #483D8B 25%, #00ffff 31.25%, #0000ff 37.5%, #ff00ff 43.75%, #FF00FF 50%, #ff0000 56.25%, #ff7d00 62.5%, #ffff00 68.75%, #000000 75%, #00ffff 81.25%, #0000ff 87.5%, #ff00ff 93.75%, #0000FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 100%;
+            animation: masked-animation 2s infinite linear;
+        }
+
+        @keyframes masked-animation {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: -100%, 0;
+            }
+        }
+
+        .style17 {
+            border: 1px solid #E6E6E6;
+            /*background-color: #F4F9FF;*/
+            box-shadow: 0 0 3px #E6E6E6;
+        }
+
+        @keyframes moveLine {
+            0% {
+                background-position: -100px 1px, calc(100% - 1px) -100px, calc(100% + 100px) calc(100% - 1px), 1px 0px;
+            }
+            5% {
+                background-position: 0px 1px, calc(100% - 1px) -100px, calc(100% + 100px) calc(100% - 1px), 1px -100px;
+            }
+            30% {
+                background-position: 100% 1px, calc(100% - 1px) -100px, calc(100% + 100px) calc(100% - 1px), 1px -100px;
+            }
+            35% {
+                background-position: calc(100% + 100px) 1px, calc(100% - 1px) 0px, calc(100% + 100px) calc(100% - 1px), 1px -100px;
+            }
+            50% {
+                background-position: calc(100% + 100px) 1px, calc(100% - 1px) 100%, calc(100% + 100px) calc(100% - 1px), -100px -100px;
+            }
+            55% {
+                background-position: calc(100% + 100px) 1px, calc(100% - 1px) calc(100% + 100px), 100% calc(100% - 1px), -100px calc(100% + 100px);
+            }
+            80% {
+                background-position: calc(100% + 100px) 1px, calc(100% - 1px) calc(100% + 100px), 0px calc(100% - 1px), 1px calc(100% + 100px);
+            }
+            85% {
+                background-position: calc(100% + 100px) 1px, calc(100% - 1px) calc(100% + 100px), -100px calc(100% - 1px), 1px 100%;
+            }
+            100% {
+                background-position: calc(100% + 100px) 1px, calc(100% - 1px) calc(100% + 100px), -100px calc(100% - 1px), 1px 0px;
+            }
+        }
+
+        .marquee-line {
+            background-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #1E90FF 100%), linear-gradient(0deg, #1E90FF 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(-90deg, rgba(0, 0, 0, 0) 0%, #1E90FF 100%), linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, #1E90FF 100%);
+            background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+            /*线条高度*/
+            background-size: 25px 4px, 4px 25px, 25px 4px, 4px 25px;
+            background-position: -25px 1px, calc(100% - 1px) -25px, calc(100% + 25px) calc(100% - 1px), 1px 0px;
+            animation: moveLine 3s infinite linear;
+            height: calc(100% - 2px);
+            padding: 1px;
+            background-clip: content-box;
+        }
+
+        .box {
+
+            /*box-shadow: 0 0 3px orange;*/
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .loader {
+            font-size: 10px;
+            margin: 30% auto;
+            text-indent: -9999em;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #00BFFF;
+            background: -moz-linear-gradient(left, #00BFFF 10%, rgba(255, 255, 255, 0) 42%);
+            background: -webkit-linear-gradient(left, #00BFFF 10%, rgba(255, 255, 255, 0) 42%);
+            background: -o-linear-gradient(left, #00BFFF 10%, rgba(255, 255, 255, 0) 42%);
+            background: -ms-linear-gradient(left, #00BFFF 10%, rgba(255, 255, 255, 0) 42%);
+            background: linear-gradient(to right, #00BFFF 10%, rgba(255, 255, 255, 0) 42%);
+            position: relative;
+            -webkit-animation: load3 1.4s infinite linear;
+            animation: load3 1.4s infinite linear;
+        }
+
+        .loader:before {
+            width: 50%;
+            height: 50%;
+            background: #00BFFF;
+            border-radius: 100% 0 0 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+        }
+
+        .loader:after {
+            background: #ffffff;
+            width: 75%;
+            height: 75%;
+            border-radius: 50%;
+            content: '';
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        @-webkit-keyframes load3 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes load3 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+<!--导航栏-->
+<div style="width:1100px;margin:0px auto;">
+    <ul class="layui-nav layui-bg-cyan" lay-filter="demo">
+        <li class="layui-nav-item">
+            <a href="javascript:;" style="font-size: 18px;color:white;"><img src="../static/images/provenance.jpg"
+                                                                             class="layui-nav-img">区块链药品溯源</a>
+        </li>
+
+        <li class="layui-nav-item" lay-unselect="" style="float:right;">
+            <!--        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="login">登录</button>-->
+            <a href="/login">登录</a>
+        </li>
+        <li class="layui-nav-item" lay-unselect="" style="float:right;">
+            <!--        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="register">注册</button>-->
+            <a href="javascript:;">注册</a>
+        </li>
+    </ul>
+</div>
+
+<div id="app">
+    <div style="width:1100px;margin:0px auto;">
+
+        <div class="layui-carousel" id="carousel1" style="margin:20px auto;">
+            <div carousel-item="">
+                <div><img src="../static/images/carousel1.jpg"></div>
+                <div><img src="../static/images/carousel2.jpg"></div>
+                <div><img src="../static/images/producter.jpg"></div>
+                <div><img src="../static/images/logistics1.jpg"></div>
+            </div>
+        </div>
+        <!-- 正在处理的交易量，成交量  -->
+        <div class="layui-row" style="margin-top:20px;">
+            <!--  处理的交易总量、块高、交易总量  -->
+            <div style="width: 45%;" class="layui-inline ">
+                <div class=" style17" style="width:459px;height:216px;">
+                    <h4 style="position:relative;left:20px;top:15px;color:#00BFFF">实时数据</h4>
+                    <h4 style='text-align: center;font-size: 20px; position: relative;left:0px;top:54px'>
+                        <div style="width:110px;height:55px;margin:0px auto;">
+                            <div class="loader" style="position: relative;left:0px;top:-33px"></div>
+                            <div style="position: relative;left:0px;top:-125px;font-size: 35px;font-weight: bold;color:#00BFFF;">
+                                {{openTransactions.length}}
+                            </div>
+                        </div>
+                        <div style="height:30px;width: 180px;margin: 5px auto;font-size: 14px;">正在处理交易</div>&nbsp;
+                    </h4>
+                    <div>
+                        <h4 style="font-size: 20px;width: 45%;text-align: center;position: relative;left:-33px;top:-96px"
+                            class="layui-inline">
+                            <div style="width:110px;height:55px;margin:0px auto;">
+                                <div class="loader" style="position: relative;left:0px;top:-33px"></div>
+                                <div style="position: relative;left:0px;top:-125px;font-size: 35px;font-weight: bold;color:#00BFFF;">
+                                    {{blockchain.length - 1}}
+                                </div>
+                            </div>
+                            <div style="height:30px;width: 180px;margin: 5px auto;font-size: 14px;">当前块高</div>
+
+                        </h4>
+                        <div style="width: 5%;" class="layui-inline">
+                        </div>
+                        <h4 style="font-size: 20px;width: 45%;text-align: center;position: relative;left:33px;top:-96px"
+                            class="layui-inline">
+                            <div style="width:110px;height:55px;margin:0px auto;">
+                                <div class="loader" style="position: relative;left:0px;top:-33px"></div>
+                                <div style="position: relative;left:0px;top:-125px;font-size: 35px;font-weight: bold;color:#00BFFF;">
+                                    {{alltransactions.length}}
+                                </div>
+                            </div>
+                            <div style="height:30px;width: 180px;margin: 5px auto;font-size: 14px;">交易总量</div>
+                        </h4>
+                    </div>
+                </div>
+
+            </div>
+            <div style="width: 5%;" class="layui-inline">
+            </div>
+
+            <div style="width: 45%;height:216px;position: relative;top:0px;left:45px" class="layui-inline style17"
+                 id="line"></div>
+
+        </div>
+
+        <!-- 区块链信息，交易信息，溯源信息 -->
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" style="margin-top: 50px">
+            <ul class="layui-tab-title">
+                <li class="layui-this" style="font-size:25px" lay-id="11" @click="showbutton='block'">区块链信息</li>
+                <li style="font-size:25px" lay-id="22" @click="showbutton='none'">交易信息</li>
+                <li style="font-size:25px" lay-id="33" @click="showbutton='none'">溯源查询</li>
+            </ul>
+            <button type="button" style="position:relative;left:980px;top:-45px;" :style="{display:showbutton}"
+                    class="layui-btn layui-btn-normal layui-btn-radius"
+                    @click="onResolve">解决冲突
+            </button>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <!--     展示区块链与分页    -->
+                    <div class="layui-row">
+                        <!--                        <button type="button" style="margin:5px 5px 5px 950px;"-->
+                        <!--                                class="layui-btn layui-btn-normal layui-btn-radius"-->
+                        <!--                                @click="onResolve">解决冲突-->
+                        <!--                        </button>-->
+                        <blockquote class="layui-elem-quote layui-quote-nm">
+                            <div class="col">
+                                <div class="layui-collapse" lay-accordion="">
+                                    <div class="layui-colla-item" v-for="(data, index) in sliceblockchain">
+                                        <h2 class="layui-colla-title"
+                                            @click="showElement === index ? showElement = null : showElement = index">
+                                            <strong style="font-size: 15px">区块号 #{{ data.index }}</strong>
+                                            <i :class="showElement===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                               style="float: right"></i></h2>
+                                        <div class="layui-colla-content "
+                                             style=" word-wrap: break-word; word-break: break-all;"
+                                             :class="{'layui-show': showElement === index}">
+                                            <div>
+                                                <table class="layui-table">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>高度</td>
+                                                        <td>{{data.index}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>前块哈希</td>
+                                                        <td>{{ data.previous_hash }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>时间戳</td>
+                                                        <td>{{ data.timestamp }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>工作量证明</td>
+                                                        <td>{{ data.proof}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="layui-collapse" lay-accordion="">
+                                                <div class="layui-colla-item" v-for="(tx,index) in data.transactions">
+                                                    <h2 class="layui-colla-title"
+                                                        @click="showtransaction === index ? showtransaction = null : showtransaction = index">
+                                                        <strong>交易 #{{ index }}</strong>
+                                                        <i :class="showtransaction===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                                           style="float: right"></i>
+                                                    </h2>
+                                                    <div class="layui-colla-content "
+                                                         style=" word-wrap: break-word; word-break: break-all;"
+                                                         :class="{'layui-show': showtransaction === index}">
+                                                        <div>
+                                                            <table class="layui-table">
+
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td style="width: 80px">发送者</td>
+                                                                    <td>
+                                                                        <div class="layui-collapse" lay-accordion="">
+                                                                            <div class="layui-colla-item">
+                                                                                <h2 class="layui-colla-title"
+                                                                                    @click="showsender === index ? showsender = null : showsender = index">
+                                                                                    {{tx.sender.substring(0, 50)}}...
+                                                                                    <i :class="showsender===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                                                                       style="float: right"></i>
+                                                                                </h2>
+                                                                                <div class="layui-colla-content"
+                                                                                     :class="{'layui-show': showsender === index}">
+                                                                                    {{tx.sender}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>接受者</td>
+                                                                    <td>
+                                                                        <div class="layui-collapse" lay-accordion="">
+                                                                            <div class="layui-colla-item">
+                                                                                <h2 class="layui-colla-title"
+                                                                                    @click="showrecipient === index ? showrecipient = null : showrecipient = index">
+
+                                                                                    {{tx.recipient.substring(0, 50)}}...
+                                                                                    <i :class="showsender===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                                                                       style="float: right"></i>
+                                                                                </h2>
+                                                                                <div class="layui-colla-content"
+                                                                                     :class="{'layui-show': showrecipient === index}">
+                                                                                    {{tx.recipient}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>签名</td>
+                                                                    <td>
+                                                                        <div class="layui-collapse" lay-accordion="">
+                                                                            <div class="layui-colla-item">
+                                                                                <h2 class="layui-colla-title"
+                                                                                    @click="showsignature === index ? showsignature = null : showsignature = index">
+
+                                                                                    {{tx.signature.substring(0, 50)}}...
+                                                                                    <i :class="showsender===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                                                                       style="float: right"></i>
+                                                                                </h2>
+                                                                                <div class="layui-colla-content"
+                                                                                     :class="{'layui-show': showsignature === index}">
+                                                                                    {{tx.signature}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>溯源码</td>
+                                                                    <td>{{ tx.provenance_code}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>药品名称</td>
+                                                                    <td>{{ tx.drug_name}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>类别</td>
+                                                                    <td>{{ tx.classes}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>信息</td>
+                                                                    <td><!-- 信息循环   -->
+                                                                        <table class="layui-table">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th style="text-align: center"
+                                                                                    v-for="(key,value) in JSON.parse(tx.information)">
+                                                                                    {{value}}
+                                                                                </th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            <tr>
+                                                                                <td style="text-align: center"
+                                                                                    v-for="(key,value) in JSON.parse(tx.information)">
+                                                                                    {{key}}
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="blockchianpage" style="marin-left:20px"></div>
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+                <!--  展示区块交易信息与分页    -->
+                <div class="layui-tab-item">
+                    <div class="layui-row">
+                        <blockquote class="layui-elem-quote layui-quote-nm">
+
+                            <div class="col">
+                                <div style="margin:5px 5px 5px 40px">
+                                    <strong style="width:250px;text-align: center;display: inline-block;font-size: 18px">溯源码</strong>
+                                    <strong style="width:250px;text-align: center;display: inline-block;font-size: 18px">药品名称</strong>
+                                    <strong style="width:250px;text-align: center;display: inline-block;font-size: 18px">所在区块</strong>
+                                </div>
+                                <div class="layui-collapse" lay-accordion="">
+                                    <div class="layui-colla-item" v-for="(data, index) in slicetransactions">
+                                        <h2 class="layui-colla-title"
+                                            @click="showElement === index ? showElement = null : showElement = index">
+
+                                            <strong style="width:250px;text-align: center;display: inline-block;">{{data.provenance_code}}</strong>
+                                            <strong style="width:250px;text-align: center;display: inline-block;">{{data.drug_name}}</strong>
+                                            <strong style="width:250px;text-align: center;display: inline-block;">{{data.block_height}}</strong>
+                                            <i :class="showElement===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                               style="float: right"></i>
+                                        </h2>
+                                        <div class="layui-colla-content"
+                                             style=" word-wrap: break-word; word-break: break-all;"
+                                             :class="{'layui-show': showElement === index}">
+                                            <div>
+                                                <table class="layui-table">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td style="width: 80px">发送者</td>
+                                                        <td>
+                                                            <div class="layui-collapse" lay-accordion="">
+                                                                <div class="layui-colla-item">
+                                                                    <h2 class="layui-colla-title"
+                                                                        @click="showsender === index ? showsender = null : showsender = index">
+
+                                                                        {{data.sender.substring(0, 50)}}...
+                                                                        <i :class="showsender===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                                                           style="float: right"></i>
+                                                                    </h2>
+                                                                    <div class="layui-colla-content"
+                                                                         :class="{'layui-show': showsender === index}">
+                                                                        {{data.sender}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>接受者</td>
+                                                        <td>
+                                                            <div class="layui-collapse" lay-accordion="">
+                                                                <div class="layui-colla-item">
+                                                                    <h2 class="layui-colla-title"
+                                                                        @click="showrecipient === index ? showrecipient = null : showrecipient = index">
+
+                                                                        {{data.recipient.substring(0, 50)}}...
+                                                                        <i :class="showrecipient===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                                                           style="float: right"></i>
+                                                                    </h2>
+                                                                    <div class="layui-colla-content"
+                                                                         :class="{'layui-show': showrecipient === index}">
+                                                                        {{data.recipient}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>签名</td>
+                                                        <td>
+                                                            <div class="layui-collapse" lay-accordion="">
+                                                                <div class="layui-colla-item">
+                                                                    <h2 class="layui-colla-title"
+                                                                        @click="showsignature === index ? showsignature = null : showsignature = index">
+
+                                                                        {{data.signature.substring(0, 50)}}...
+                                                                        <i :class="showsignature===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                                                           style="float: right"></i>
+                                                                    </h2>
+                                                                    <div class="layui-colla-content"
+                                                                         :class="{'layui-show': showsignature === index}">
+                                                                        {{data.signature}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>溯源码</td>
+                                                        <td>{{ data.provenance_code}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>药品名称</td>
+                                                        <td>{{ data.drug_name}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>类别</td>
+                                                        <td>{{ data.classes}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>信息</td>
+
+                                                        <td><!-- 信息循环   -->
+                                                            <table class="layui-table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th style="text-align: center"
+                                                                        v-for="(key,value) in JSON.parse(data.information)">
+                                                                        {{value}}
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td style="text-align: center"
+                                                                        v-for="(key,value) in JSON.parse(data.information)">
+                                                                        {{key}}
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="transactionspage" style="marin-left:20px"></div>
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <form @submit.prevent="onAddCode">
+                        <div class="layui-form-item" style="margin:20px auto;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">输入溯源码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" v-model="provenance_code"
+                                           id="inputprovenance_code"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class='layui-btn layui-btn-normal' :disabled="provenance_code.trim() === ''"
+                                        type="submit"
+                                        id="search_drug">搜索
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="layui-collapse" lay-accordion="">
+                        <div class="layui-colla-item" v-for="(data, index) in provenance_transactions">
+                            <h2 class="layui-colla-title"
+                                @click="showElement === index ? showElement = null : showElement = index">
+                                <i :class="showElement===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"></i>
+                                <strong style="width:250px;text-align: center;">交易</strong>
+                                <strong>#{{ index}}</strong>
+                                <i :class="showElement===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                   style="float: right"></i>
+                            </h2>
+
+                            <div class="layui-colla-content "
+                                 style=" word-wrap: break-word; word-break: break-all;"
+                                 :class="{'layui-show': showElement === index}">
+                                <div>
+                                    <table class="layui-table">
+
+                                        <tbody>
+                                        <tr>
+                                            <td style="width: 80px">发送者</td>
+                                            <td>
+                                                <div class="layui-collapse" lay-accordion="">
+                                                    <div class="layui-colla-item">
+                                                        <h2 class="layui-colla-title"
+                                                            @click="showsender === index ? showsender = null : showsender = index">
+
+                                                            {{data.sender.substring(0, 50)}}...
+                                                            <i :class="showsender===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                                               style="float: right"></i>
+                                                        </h2>
+                                                        <div class="layui-colla-content"
+                                                             :class="{'layui-show': showsender === index}">
+                                                            {{data.sender}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>接受者</td>
+                                            <td>
+                                                <div class="layui-collapse" lay-accordion="">
+                                                    <div class="layui-colla-item">
+                                                        <h2 class="layui-colla-title"
+                                                            @click="showrecipient === index ? showrecipient = null : showrecipient = index">
+                                                            {{data.recipient.substring(0, 50)}}...
+                                                            <i :class="showrecipient===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                                               style="float: right"></i>
+                                                        </h2>
+                                                        <div class="layui-colla-content"
+                                                             :class="{'layui-show': showrecipient === index}">
+                                                            {{data.recipient}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>签名</td>
+                                            <td>
+                                                <div class="layui-collapse" lay-accordion="">
+                                                    <div class="layui-colla-item">
+                                                        <h2 class="layui-colla-title"
+                                                            @click="showsignature === index ? showsignature = null : showsignature = index">
+                                                            {{data.signature.substring(0, 50)}}...
+                                                            <i :class="showsignature===null ? 'layui-icon layui-icon-right':'layui-icon layui-icon-down'"
+                                                               style="float: right"></i>
+                                                        </h2>
+                                                        <div class="layui-colla-content"
+                                                             :class="{'layui-show': showsignature === index}">
+                                                            {{data.signature}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>溯源码</td>
+                                            <td>{{ data.provenance_code}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>药品名称</td>
+                                            <td>{{ data.drug_name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>类别</td>
+                                            <td>{{ data.classes}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>信息</td>
+                                            <td>
+                                                <!-- 信息循环   -->
+                                                <table class="layui-table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="text-align: center"
+                                                            v-for="(key,value) in JSON.parse(data.information)">{{value}}
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td style="text-align: center"
+                                                            v-for="(key,value) in JSON.parse(data.information)">{{key}}
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/js/vue.js"></script>
+<script src="../static/js/axios.min.js"></script>
+<script src="../static/layui/layui.js"></script>
+<script src="../static/js/echarts.min.js"></script>
+
+<script>
+    var newvm = new Vue({
+        el: '#app',
+        data: {
+            blockchain: [],
+            openTransactions: [],
+            alltransactions: [],
+            wallet: null,
+            view: 'chain',
+            walletLoading: false,
+            txLoading: false,
+            dataLoading: false,
+            showElement: null,
+            showtransaction: null,
+            showsender: null,
+            showrecipient: null,
+            showsignature: null,
+            showbutton: 'block',
+            showpublic: false,
+            showprivate: false,
+            error: null,
+            success: null,
+            // funds: 0,
+            outgoingTx: {
+                recipient: '',
+                signature: '',
+                provenance_code: '',
+                drug_name: '',
+                classes: '',
+                information: []
+            },
+            nodes: [],
+            newNodeUrl: '',
+            xdata: [],
+            ydata: [],
+            sliceblockchain: [],
+            slicetransactions: [],
+            provenance_code: '',
+            provenance_transactions: [],
+        },
+        watch: {
+            xdata: function (val) {
+                this.xdata = val
+            },
+            ydata: function (val) {
+                this.ydata = val
+            }
+        },
+        mounted() {
+            //读取钱包数据
+            this.onLoadWallet()
+            // //读取折线图xy数据
+            // this.readTabledata()
+            //读取区块数据
+            this.onLoadData()
+            //this.blockchainpage()
+            //读取公开交易数据
+            this.onLoadOpenTransactions()
+            //读取交易数据
+            this.onLoadTransactions()
+
+            //加载折线图
+            this.onreloadTable()
+        },
+
+        computed: {
+            reverseDate() {
+                return this.blockchain.reverse()
+            }
+        },
+        methods: {
+            onCreateWallet: function () {
+                // Send Http request to create a new wallet (and return keys)
+                /*在axios外部 vm.walletLoading 等价于this.walletLoading,但是在axios内部则不行axios中this为undefined */
+                var vm = this;
+                this.walletLoading = true;
+                axios.post('/wallet')
+                    .then(function (response) {
+                        vm.error = null;
+                        vm.success = 'Created Wallet! Public Key: ' + response.data.public_key + ', Private Key: ' + response.data.private_key;
+                        vm.wallet = {
+                            public_key: response.data.public_key,
+                            private_key: response.data.private_key
+                        }
+                        // vm.funds = response.data.funds;
+                        vm.walletLoading = false;
+                    })
+                    .catch(function (error) {
+                        vm.success = null;
+                        /*这是把node.py中的wallet中的创建失败后自己设置的message传入给vm.error*/
+                        vm.error = error.response.data.message;
+                        vm.wallet = null;
+                        vm.walletLoading = false;
+                    });
+            },
+            onLoadWallet: function () {
+                // Send Http request to load an existing wallet (from a file on the server)
+                var vm = this;
+                this.walletLoading = true;
+                axios.get('/wallet')
+                    .then(function (response) {
+                        vm.error = null;
+                        vm.success = 'Created Wallet! Public Key: ' + response.data.public_key + ', Private Key: ' + response.data.private_key;
+                        vm.wallet = {
+                            public_key: response.data.public_key,
+                            private_key: response.data.private_key
+                        }
+                        /* vm.funds = response.data.funds;*/
+                        vm.walletLoading = false;
+
+                    })
+                    .catch(function (error) {
+                        vm.success = null;
+                        vm.error = error.response.data.message;
+                        vm.wallet = null;
+                        vm.walletLoading = false;
+                    });
+            },
+            onSendTx: function () {
+                // Send Transaction to backend
+                var vm = this;
+                this.txLoading = true;
+                axios.post('/transaction', {
+                    recipient: this.outgoingTx.recipient,
+                    signature: this.outgoingTx.signature,
+                    provenance_code: this.outgoingTx.provenance_code,
+                    drug_name: this.outgoingTx.drug_name,
+                    classes: this.outgoingTx.classes,
+                    information: this.outgoingTx.information
+                })
+                    .then(function (response) {
+                        vm.error = null;
+                        vm.success = response.data.message;
+                        console.log(response.data);
+                        // vm.funds = response.data.funds;
+                        vm.txLoading = false;
+                    })
+                    .catch(function (error) {
+                        vm.success = null;
+                        vm.error = error.response.data.message;
+                        vm.txLoading = false;
+                    });
+            },
+            onMine: function () {
+                var vm = this;
+                axios.post('/mine')
+                    .then(function (response) {
+                        vm.error = null;
+                        vm.success = response.data.message;
+                        console.log(response.data);
+                        layer.msg('成功上链')
+                        // vm.funds = response.data.funds;
+                    })
+                    .catch(function (error) {
+                        vm.success = null;
+                        vm.error = error.response.data.message;
+                        layer.msg('上链失败')
+                    });
+
+            },
+            onResolve: function () {
+                var vm = this;
+                axios.post('/resolve-conflicts')
+                    .then(function (response) {
+                        vm.error = null;
+                        vm.success = response.data.message;
+                    })
+                    .catch(function (error) {
+                        vm.success = null;
+                        vm.error = error.response.data.message;
+                    });
+            },
+            onLoadData: function () {
+                // Load blockchain data
+                var vm = this;
+                this.dataLoading = true;
+                // axios.get('localhost:5000/chain') 等价于 axios.get('/chain')
+                axios.get('/chain')
+                    .then(function (response) {
+                        console.log(response)
+                        // response里面data返回的是区块链数据
+                        vm.blockchain = response.data;
+                        vm.dataLoading = false;
+                    })
+                    .then(function (response) {
+                        layui.use('laypage', function () {
+                            var laypage = layui.laypage
+                            laypage.render({
+                                elem: 'blockchianpage'
+                                , count: vm.blockchain.length
+                                , limit: 10
+                                , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                                , theme: '#1E9FFF'
+                                , jump: function (obj, first) {
+                                    vm.sliceblockchain = vm.blockchain.concat().reverse().splice(obj.curr * obj.limit - obj.limit, obj.limit);
+                                }
+                            });
+                        })
+                    })
+                    // dataLoading 可以捕捉异常
+                    .catch(function (error) {
+                        vm.dataLoading = false;
+                        vm.error = 'Something went wrong.';
+                    });
+            },
+            onLoadOpenTransactions: function () {
+                var vm = this
+                axios.get('/transactions')
+                    .then(function (response) {
+                        console.log(response)
+                        vm.openTransactions = response.data
+                        vm.dataLoading = false
+                    })
+                    .catch(function (error) {
+                        vm.dataLoading = false
+                        vm.error = 'Something went wrong.'
+                    });
+            },
+            onLoadTransactions: function () {
+                var vm = this
+                axios.get('/alltransactions')
+                    .then(function (response) {
+                        console.log(response)
+                        vm.alltransactions = response.data.data
+                        vm.dataLoading = false
+                    })
+                    .then(function (response) {
+                        layui.use('laypage', function () {
+                            var laypage = layui.laypage
+                            laypage.render({
+                                elem: 'transactionspage'
+                                , count: vm.alltransactions.length
+                                , limit: 10
+                                , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                                , theme: '#1E9FFF'
+                                , jump: function (obj, first) {
+                                    vm.slicetransactions = vm.alltransactions.concat().reverse().splice(obj.curr * obj.limit - obj.limit, obj.limit);
+                                }
+                            });
+                        })
+                    })
+                    .catch(function (error) {
+                        vm.dataLoading = false
+                        vm.error = 'something went wrong.'
+                    });
+            },
+            onAddNode: function () {
+                // Add node as peer node to local node server
+                var vm = this;
+                axios.post('/node', {node: this.newNodeUrl})
+                    .then(function (response) {
+                        vm.success = 'Stored node successfully.';
+                        vm.error = null;
+                        vm.nodes = response.data.all_nodes;
+                        layer.msg("成功")
+                    })
+                    .catch(function (error) {
+                        vm.success = null;
+                        vm.error = error.response.data.message;
+                    });
+            },
+            onAddCode: function () {
+                // 输入溯源码
+                var vm = this;
+                this.dataLoading = true;
+                this.provenance_transactions = []
+                axios.post('/provenance', {provenance_code: this.provenance_code})
+                    .then(function (response) {
+                        vm.success = 'Search the drug successfully.';
+                        vm.error = null;
+                        vm.provenance_transactions = response.data.provenance_transactions;
+                        // vm.informations.push(response.data.provenance_transactions.information)
+                        vm.dataLoading = false;
+                    })
+                    .catch(function (error) {
+                        vm.success = null;
+                        vm.error = error.response.data.message;
+                        vm.dataLoading = false;
+                        layer.msg('无此药品，请确认后输入！');
+                    });
+            },
+
+            onreloadTable: function () {
+
+                // console.log(this.xdata,this.ydata)
+                var vm = this
+                // alert(vm.xdata,this.ydata)
+                axios.get('/linetable')
+                    .then(function (response) {
+                        console.log(response)
+                        vm.success = 'load table data successfully';
+                        vm.error = null;
+                        vm.xdata = response.data.xdata;
+                        vm.ydata = response.data.ydata;
+                        var mChars = echarts.init(document.querySelector('#line'))
+                        var xdataarr = ['2020-12-25', '2020-12-26', '2020-12-27', '2020-12-28', '2020-12-29', '2020-12-30', '2020-12-31']
+                        var ydataarr = [0, 0, 0, 0, 0, 2, 0]
+                        var option = {
+                            title: {
+                                text: '七天成交量',
+                                textStyle: {
+                                    fontWeight: 'lighter',
+                                    fontSize: 14,
+                                    color: '#69add7'
+                                },
+                                left: 'center'
+                            },
+                            xAxis: {
+                                type: 'category',
+                                data: vm.xdata
+                            },
+                            yAxis: {
+                                type: 'value',
+
+                            },
+                            series: [
+                                {
+                                    name: '交易量',
+                                    type: 'line',
+                                    data: vm.ydata,
+                                    markPoint: {
+                                        symbolSize: 30,
+
+                                        label: {},
+
+                                        data: [
+                                            {
+                                                type: 'max'
+
+                                            }, {
+                                                type: 'min'
+                                            }
+                                        ]
+                                    },
+                                    markLine: {
+                                        data: [
+                                            {type: 'average'}
+                                        ]
+                                    },
+                                    //线条颜色
+                                    lineStyle: {
+                                        color: '#00A4FF',
+                                        // type: 'dashed'
+                                    },
+                                    smooth: true
+
+                                }
+                            ],
+                            // 提示框组件，用于配置鼠标滑过或点击图表时的显示框
+                            tooltip: {
+                                trigger: 'axis',
+                                // triggerOn: 'click',
+
+                            },
+                            grid: {
+                                x: 30,
+                                y: 30,
+                                y2: 30,
+                                x2: 30,
+                                borderWidth: 5
+                            }
+                        }
+                        mChars.setOption(option)
+                    })
+            },
+
+
+        }
+    })
+
+</script>
+
+<script>
+    layui.use(['element', 'layer', 'jquery', 'form', 'carousel'], function () {
+        var element = layui.element
+            , layer = layui.layer
+            , $ = layui.jquery
+            , form = layui.form
+            , carousel = layui.carousel;
+        //监听导航点击
+        element.on('nav(demo)', function (elem) {
+            console.log(elem)
+            //layer.msg(elem.text());
+        });
+        carousel.render({
+            elem: '#carousel1'
+            , width: '1100px'
+            , height: '300px'
+            , interval: 5000
+        });
+        //Hash地址的定位
+        var layid = location.hash.replace(/^#docDemoTabBrief=/, '');
+        element.tabChange('docDemoTabBrief', layid);
+
+        element.on('tab(docDemoTabBrief)', function (elem) {
+            location.hash = 'docDemoTabBrief=' + $(this).attr('lay-id');
+        });
+        element.on('tab(docDemoTabBrief)', function (data) {
+            // console.log(this); //当前Tab标题所在的原始DOM元素
+            console.log(data.index); //得到当前Tab的所在下标
+            // console.log(data.elem); //得到当前的Tab大容器
+            if (data.index == 2) {
+
+            } else if (data.index == 1) {
+                newvm.onLoadTransactions()
+            } else if (data.index == 0) {
+                newvm.onLoadData()
+                //读取公开交易数据
+                newvm.onLoadOpenTransactions()
+                //读取交易数据
+                newvm.onLoadTransactions()
+
+            }
+        });
+
+
+    });
+
+</script>
+</body>
+</html>

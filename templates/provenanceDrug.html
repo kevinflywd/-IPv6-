@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blockchain Management</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" >
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col">
+                    <h1>Manage your Blockchain</h1>
+                </div>
+            </div>
+            <div v-if="error" class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            <div v-if="success" class="alert alert-success" role="alert">
+                {{ success }}
+            </div>
+            <!--wallet&Node 与Network之间的转换-->
+            <div class="row">
+                <div class="col">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Wallet &amp; Node</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/network">Network</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  active" href="/provenanceDrug">Provenance</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <form @submit.prevent="onAddCode">
+                        <div class="form-group">
+                            <label for="provenance_code">Provenance code</label>
+                            <input v-model="provenance_code" type="text" class="form-control" id="provenance_code" placeholder="please input provenance code">
+                        </div>
+                        <button :disabled="provenance_code.trim() === ''" type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col">
+                    <div v-if="dataLoading" class="lds-ring">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div v-if="!dataLoading" class="accordion">
+                        <div class="card" v-for="(transaction,index) in transactions">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" @click="showElement === index ? showElement = null : showElement = index">
+                                        Transaction #{{index}}
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse" :class="{show: showElement === index}">
+                                <div class="card-body">
+                                    <div class="list-group">
+                                        <p>Sender: {{ transaction.sender }}</p>
+                                        <p>Recipient: {{ transaction.recipient }}</p>
+<!--                                        <p>Amount: {{ transaction.amount }}</p>-->
+                                        <p>Signature: {{ transaction.signature }}</p>
+                                        <p>Provenance_code: {{ transaction.provenance_code }}</p>
+                                        <p>Drug_name: {{ transaction.drug_name }}</p>
+                                        <p>Classes: {{ transaction.classes }}</p>
+                                        <p>Information: </p>
+                                        <div v-for="(key,value) in transaction.information" class="list-group-item flex-column align-items-start">
+                                            <div>{{value}}: {{key}}</div>
+<!--                                            <div>Information: {{ transaction.information }}</div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<!--                    <ul class="list-group">-->
+<!--&lt;!&ndash;                         下面三行已经成功显示，现在是要优化一下，折叠&ndash;&gt;-->
+<!--                        <button v-for="transaction in transactions" style="cursor: pointer;" class="list-group-item list-group-item-action" @click="onRemoveNode(node)">-->
+<!--                            {{ transaction }}-->
+<!--                        </button>-->
+<!--                    </ul>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/js/vue.js"></script>
+    <script src="../static/js/axios.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                dataLoading:false,
+                showElement: null,
+                transactions: [],
+                // informations:[],
+                provenance_code: '',
+                error: null,
+                success: null
+            },
+            methods: {
+                onAddCode: function () {
+                    // 输入溯源码
+                    var vm = this;
+                    this.dataLoading = true;
+                    this.transactions = []
+                    axios.post('/provenance', {provenance_code: this.provenance_code})
+                        .then(function(response){
+                            vm.success = 'Search the drug successfully.';
+                            vm.error = null;
+                            vm.transactions = response.data.provenance_transactions;
+                            // vm.informations.push(response.data.provenance_transactions.information)
+                            vm.dataLoading = false;
+                        })
+                        .catch(function (error){
+                            vm.success = null;
+                            vm.error = error.response.data.message;
+                            vm.dataLoading = false;
+                        });
+                },
+
+
+            }
+        })
+    </script>
+</body>
+
+</html>
